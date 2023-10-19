@@ -1,0 +1,86 @@
+[gd_scene load_steps=10 format=3 uid="uid://bsocundnoy6v6"]
+
+[ext_resource type="Script" path="res://Main.gd" id="1_lapyp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2w4p3"]
+albedo_color = Color(1, 0.654902, 0, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_6025g"]
+material = SubResource("StandardMaterial3D_2w4p3")
+size = Vector3(0.3, 1, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_on4ri"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_284if"]
+material = SubResource("StandardMaterial3D_on4ri")
+radius = 0.05
+height = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4n0cq"]
+albedo_color = Color(0.741176, 0.192157, 0.152941, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dcak0"]
+material = SubResource("StandardMaterial3D_4n0cq")
+size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gc48n"]
+albedo_color = Color(0.137255, 0.462745, 0.572549, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_i5vdi"]
+material = SubResource("StandardMaterial3D_gc48n")
+size = Vector3(0.1, 0.1, 0.1)
+
+[node name="Main" type="Node3D" node_paths=PackedStringArray("body", "target", "forward_indicator", "angle_indicator", "label")]
+script = ExtResource("1_lapyp")
+body = NodePath("Body")
+target = NodePath("Target")
+forward_indicator = NodePath("ForwardIndicator")
+angle_indicator = NodePath("AngleIndicator")
+label = NodePath("Label")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("PrismMesh_6025g")
+
+[node name="Target" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.229851, 0.79647, -1.19355)
+mesh = SubResource("SphereMesh_284if")
+
+[node name="ForwardIndicator" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -1)
+mesh = SubResource("BoxMesh_dcak0")
+
+[node name="Label3D" type="Label3D" parent="ForwardIndicator"]
+billboard = 1
+double_sided = false
+no_depth_test = true
+text = "-Z"
+font_size = 16
+
+[node name="AngleIndicator" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.57045, 0, -0.821332)
+mesh = SubResource("BoxMesh_i5vdi")
+
+[node name="Label3D" type="Label3D" parent="AngleIndicator"]
+billboard = 1
+double_sided = false
+no_depth_test = true
+text = "θ"
+font_size = 16
+
+[node name="Label" type="Label3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, -1.92975, 4.76837e-07, 0.77114)
+text = "
+TARGET_POS_GLOBAL: (0.229851, 0.79647, -1.193553)
+GLOBAL_POS: (0, 0, 0)
+TARGET_POS: (0.229851, 0.79647, -1.193553)
+ANGLE_Y: -0.607053399086"
+horizontal_alignment = 0
+uppercase = true
+justification_flags = 0
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, 1.34728, 0, -1.62754)
+text = "var angle = forward.signed_angle_to(target_pos, Vector3.UP)
+"
